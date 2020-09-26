@@ -8,6 +8,7 @@
    return str;
  }
 
+ 
  var parseHorizontaleLine = function(str) {
   var horizontalRegExp = /^(?:([\*\-_] ?)+)\1\1$/gm;
   var stra = [];
@@ -17,11 +18,32 @@
   return str;
  }
 
+ var parseLink = function(str) {
+  var linkRegExp = /\[([^\[]+)\]\(([^\)]+)\)/;
+  var stra = [];
+  while ((stra = linkRegExp.exec(str)) !== null) {
+    str = str.replace(stra[0], '<a ' + 'href="' + stra[2] + '">' + stra[1] + '</a>');
+  }
+  return str;
+ }
+ 
+ var parseBold = function(str) {
+  var boldRegExp = /(\*\*)(.*?)\1/;
+  var stra = [];
+  while ((stra = boldRegExp.exec(str)) !== null) {
+    str = str.replace(stra[0], '<strong>' + stra[2] + '</strong>')
+  }
+  return str;
+}
+
 var markdown = {
   parse: function (str, strict) {
     'use strict';
     str = parseHeadline(str);
+    str = parseBold(str);
     str = parseHorizontaleLine(str);
+    str = parseLink(str);
+    
     return str;
   }
 };

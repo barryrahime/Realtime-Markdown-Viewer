@@ -11,3 +11,4 @@ describe('parse() features testsuite', function () {
     it(testsuite[i].name, assertion(testsuite[i], markdown));
   }
 })
+
