@@ -22,16 +22,15 @@
   var linkRegExp = /\[([^\[]+)\]\(([^\)]+)\)/;
   var stra = [];
   while ((stra = linkRegExp.exec(str)) !== null) {
-    str = str.replace(stra[0], '<a ' + 'href="' + stra[2] + '">' + stra[1] + '</a>');
+     str = str.replace(stra[0], '<b>' + stra[2] + '</b>')
   }
-  return str;
+ return str;
  }
- 
- var parseBold = function(str) {
-  var boldRegExp = /(\*\*)(.*?)\1/;
-  var stra = [];
-  while ((stra = boldRegExp.exec(str)) !== null) {
-    str = str.replace(stra[0], '<strong>' + stra[2] + '</strong>')
+	var parseStrong = function(str) {
+	  var strongRegExp = /(~~)(.*?)\1/;
+	  var stra = [];
+	  while ((stra = strongRegExp.exec(str)) !== null) {
+	    str = str.replace(stra[0], '<b>' + stra[2] + '</b>')
   }
   return str;
 }
@@ -40,6 +39,7 @@ var markdown = {
   parse: function (str, strict) {
     'use strict';
     str = parseHeadline(str);
+     str = parseStrong(str);
     str = parseBold(str);
     str = parseHorizontaleLine(str);
     str = parseLink(str);
